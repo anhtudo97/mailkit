@@ -10,7 +10,8 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev:cli": "bun run packages/cli/src/index.ts"
   },
   "workspaces": [
     "apps/*",
