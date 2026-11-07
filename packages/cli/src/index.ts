@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { sendTelegramMessage } from "@cwa-dev/mailkit-core";
 
 type TelegramResponse = {
   ok: boolean;
@@ -35,25 +36,20 @@ program
       process.exit(1);
     }
 
-    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ chat_id: chatId, text: message }),
-    });
-    const data: TelegramResponse = await response.json();
-    if (!response.ok || !data.ok) {
-      const detail = data.description ?? response.statusText;
-      console.error(`Error: ${detail}`);
+    try {
+      const result = await sendTelegramMessage({
+        botToken: token,
+        chatId,
+        message,
+      });
+
+      console.log("Telegram sent message to chat", result.chatId);
+      console.log("Message ID:", result.messageId);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      console.error(`Telegram error: ${detail}`);
       process.exit(1);
     }
-
-    const messageId = data.result?.message_id;
-
-    console.log(`Message sent with ID: ${messageId}`);
-
-    if (messageId) console.log("Telegram sent", messageId);
   });
 
 program.parseAsync(process.argv);

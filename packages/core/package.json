@@ -1,0 +1,15 @@
+{
+  "name": "@cwa-dev/mailkit-core",
+  "version": "0.0.0",
+  "files": [
+    "dist"
+  ],
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}
