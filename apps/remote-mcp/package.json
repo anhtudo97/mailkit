@@ -1,0 +1,16 @@
+{
+  "name": "mailkit-remote-mcp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cwa-dev/mailkit-core": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "commander": "^15.1.0",
+    "hono": "^4.13.17",
+    "zod": "^4.6.7"
+  }
+}
