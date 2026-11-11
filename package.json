@@ -13,7 +13,7 @@
     "prepare": "husky",
     "dev:cli": "bun run packages/cli/src/index.ts",
     "dev:mcp": "bun run packages/local-mcp/src/index.ts",
-    "dev:remote": "bun tun apps/remote-mcp/src/index.ts"
+    "dev:remote": "bun run apps/remote-mcp/src/index.ts"
   },
   "workspaces": [
     "apps/*",

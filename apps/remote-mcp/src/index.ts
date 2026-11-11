@@ -1,66 +1,70 @@
-#!/usr/bin/env node
-import { Command } from "commander";
-import { z } from "zod";
-import { homedir } from "node:os";
-import { dirname, join } from "node:path";
-import { sendTelegramMessage } from "@cwa-dev/mailkit-core";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { Hono } from "hono";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 
-const program = new Command();
-const configPath = join(homedir(), ".config", "sendkit", "config.json");
-const cliConfigSchema = z.object({
-  telegramBotToken: z.string().min(1).optional(),
-});
+import { sendTelegramMessage, telegramMessageInputSchema } from "@cwa-dev/mailkit-core";
 
-function writeTelegramBotToken(token: string) {
-  mkdirSync(dirname(configPath), { recursive: true });
-  writeFileSync(configPath, `${JSON.stringify({ telegramBotToken: token }, null, 2)}\n`, {
-    mode: 0o600,
+function createServer(botToken: string) {
+  const server = new McpServer({
+    name: "sendkit-remote",
+    version: "0.0.0",
   });
+
+  server.registerTool(
+    "telegram",
+    {
+      title: "Telegram",
+      description: "Send a Telegram message.",
+      inputSchema: telegramMessageInputSchema.shape,
+    },
+    async (input) => {
+      const result = await sendTelegramMessage({
+        ...input,
+        botToken,
+      });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Sent Telegram message ${result.messageId} to chat ${result.chatId}`,
+          },
+        ],
+        structuredContent: result,
+      };
+    },
+  );
+
+  return server;
 }
 
-function getTelegramBotToken() {
-  if (!existsSync(configPath)) {
-    throw new Error("Telegram bot token is required. Run `sendkit init`.");
-  }
+const app = new Hono();
 
-  const config = cliConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf8")));
-  const token = config.telegramBotToken;
+app.post("/:botToken/mcp", async (c) => {
+  const botToken = c.req.param("botToken");
+  const server = createServer(botToken);
 
-  if (!token) {
-    throw new Error("Telegram bot token is required. Run `sendkit init`.");
-  }
-
-  return token;
-}
-
-program.name("sendkit").description("SendKit CLI backed by sendkit-core");
-
-program
-  .command("init")
-  .description("Configure SendKit CLI local settings")
-  .requiredOption("--telegram-bot-token <botToken>", "Telegram bot token")
-  .action(async (options: { telegramBotToken: string }) => {
-    writeTelegramBotToken(options.telegramBotToken);
-    console.log(`Saved SendKit CLI config to ${configPath}`);
+  const transport = new WebStandardStreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+    enableJsonResponse: true,
   });
 
-program
-  .command("telegram")
-  .description("Send a Telegram message")
-  .argument("<chatId>", "Telegram chat ID")
-  .argument("<message>", "Message text to send")
-  .action(async (chatId: string, message: string) => {
-    const result = await sendTelegramMessage({
-      botToken: getTelegramBotToken(),
-      chatId,
-      message,
-    });
+  await server.connect(transport);
 
-    console.log(JSON.stringify(result));
-  });
-
-await program.parseAsync(process.argv).catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exitCode = 1;
+  try {
+    return await transport.handleRequest(c.req.raw);
+  } finally {
+    await server.close();
+  }
 });
+
+app.notFound((c) => {
+  return c.json({ error: "Not found" }, 404);
+});
+
+const port = Number(process.env.PORT ?? 3000);
+
+export default {
+  port,
+  fetch: app.fetch,
+};
