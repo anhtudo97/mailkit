@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@cwa-dev/mailkit-core": "workspace:*",
     "commander": "^15.0.0",
-    "@cwa-dev/mailkit-core": "workspace:*"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^26.6.6"
