@@ -29,19 +29,21 @@ Environment variables (see [.env.example](.env.example)):
 ├── .husky/           # git hooks (commit-msg -> commitlint)
 ├── .vscode/          # shared editor settings + recommended extensions
 ├── commitlint.config.mjs
-├── eslint.config.mjs
+├── .oxlintrc.json    # oxlint config
+├── .oxfmtrc.json     # oxfmt config
 └── tsconfig.json
 ```
 
 ## Scripts
 
-| Command             | Description           |
-| ------------------- | --------------------- |
-| `bun run lint`      | Lint with ESLint      |
-| `bun run lint:fix`  | Lint and auto-fix     |
-| `bun run format`    | Format with Prettier  |
-| `bun run typecheck` | Type-check with `tsc` |
-| `bun test`          | Run tests with Bun    |
+| Command                | Description           |
+| ---------------------- | --------------------- |
+| `bun run lint`         | Lint with oxlint      |
+| `bun run lint:fix`     | Lint and auto-fix     |
+| `bun run format`       | Format with oxfmt     |
+| `bun run format:check` | Check formatting      |
+| `bun run typecheck`    | Type-check with `tsc` |
+| `bun test`             | Run tests with Bun    |
 
 ## Commit convention
 
@@ -59,4 +61,4 @@ Allowed types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `buil
 ## Editor
 
 Open the project in VS Code and install the recommended extensions
-(Prettier, ESLint, EditorConfig, Bun). Format and ESLint fixes run on save.
+(Oxc, EditorConfig, Bun). Format and oxlint fixes run on save.

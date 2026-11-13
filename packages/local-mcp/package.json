@@ -1,14 +1,14 @@
 {
   "name": "@cwa-dev/mailkit-mcp",
   "version": "0.0.1",
-  "type": "module",
   "private": true,
+  "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.32.2",
     "@cwa-dev/mailkit-core": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "zod": "^4.6.7"
   }
 }
