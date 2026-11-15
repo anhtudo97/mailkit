@@ -1,3 +1,31 @@
-node_modules
+# Dependencies (bun workspaces: root + apps/* + packages/*)
+node_modules/
+
+# Build output (tsdown -> packages/*/dist)
+dist/
+*.tsbuildinfo
+
+# Env & secrets (keep .env.example)
 .env
+.env.*
+!.env.example
 .mcp.json
+
+# Logs
+*.log
+
+# Editor (keep shared .vscode/settings.json + extensions.json)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code (local only)
+.claude/settings.local.json
+
+# Generated plans/reports
+plans/reports/

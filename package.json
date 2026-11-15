@@ -20,7 +20,9 @@
     "prepare": "husky",
     "dev:cli": "bun run packages/cli/src/index.ts",
     "dev:mcp": "bun run packages/local-mcp/src/index.ts",
-    "dev:remote": "bun run apps/remote-mcp/src/index.ts"
+    "dev:remote": "bun run apps/remote-mcp/src/index.ts",
+    "build:core": "bun run --filter @cwa-dou/mailkit-core build",
+    "build:cli": "bun run --filter @cwa-dou/mailkit-cli build"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
