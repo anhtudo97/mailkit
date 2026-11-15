@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { z } from "zod";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
-import { sendTelegramMessage } from "@cwa-dev/mailkit-core";
+import { sendTelegramMessage } from "@cwa-dou/mailkit-core";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const program = new Command();
@@ -13,9 +13,13 @@ const cliConfigSchema = z.object({
 
 function writeTelegramBotToken(token: string) {
   mkdirSync(dirname(configPath), { recursive: true });
-  writeFileSync(configPath, `${JSON.stringify({ telegramBotToken: token }, null, 2)}\n`, {
-    mode: 0o600,
-  });
+  writeFileSync(
+    configPath,
+    `${JSON.stringify({ telegramBotToken: token }, null, 2)}\n`,
+    {
+      mode: 0o600,
+    },
+  );
 }
 
 function getTelegramBotToken() {
@@ -23,7 +27,9 @@ function getTelegramBotToken() {
     throw new Error("Telegram bot token is required. Run `mailkit init`.");
   }
 
-  const config = cliConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf8")));
+  const config = cliConfigSchema.parse(
+    JSON.parse(readFileSync(configPath, "utf8")),
+  );
   const token = config.telegramBotToken;
 
   if (!token) {

@@ -1,10 +1,10 @@
 {
-  "name": "mailkit",
+  "name": "cwa-dou/mailkit",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@cwa-dev/mailkit-core": "workspace:*",
+    "@cwa-dou/mailkit-core": "workspace:*",
     "commander": "^15.0.0",
     "zod": "^4.6.7"
   },
