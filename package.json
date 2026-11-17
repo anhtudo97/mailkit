@@ -22,8 +22,10 @@
     "dev:mcp": "bun run packages/local-mcp/src/index.ts",
     "dev:remote": "bun run apps/remote-mcp/src/index.ts",
     "build:core": "bun run --filter @cwa-dou/mailkit-core build",
-    "build:cli": "bun run --filter @cwa-dou/mailkit-cli build",
-    "build:mcp": "bun run --filter @cwa-dou/mailkit-mcp build"
+    "build:cli": "bun run --filter @cwa-dou/mailkit build",
+    "build:mcp": "bun run --filter @cwa-dou/mailkit-mcp build",
+    "release:pack:core": "bun run --filter @cwa-dou/mailkit-core pack:dry",
+    "release:pack:cli": "bun run --filter @cwa-dou/mailkit pack:dry"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
