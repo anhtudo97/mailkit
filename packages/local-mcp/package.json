@@ -1,6 +1,6 @@
 {
   "name": "@cwa-dou/mailkit-mcp",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "bin": {
     "mailkit-mcp": "./dist/index.js"
   },

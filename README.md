@@ -32,7 +32,7 @@ Environment variables (see [.env.example](.env.example)):
 .
 ├── packages/
 │   ├── core/         # @cwa-dou/mailkit-core: zod schemas + operations (sendTelegramMessage)
-│   ├── cli/          # mailkit CLI (commander)
+│   ├── cli/          # @cwa-dou/mailkit: CLI (commander)
 │   └── local-mcp/    # @cwa-dou/mailkit-mcp: stdio MCP server
 ├── apps/
 │   └── remote-mcp/   # Hono HTTP MCP server, protected by Clerk OAuth
@@ -47,6 +47,25 @@ Environment variables (see [.env.example](.env.example)):
 
 Each package under `packages/` builds with [tsdown](https://tsdown.dev) (`tsdown.config.ts`:
 ESM, `.d.ts`, sourcemaps, output in `dist/`) and has a `tsconfig.build.json`.
+
+## Packages
+
+Published to npm (public). Each package has its own README, shown on the npm page.
+
+| Package                                      | Description                            | Docs                                   |
+| -------------------------------------------- | -------------------------------------- | -------------------------------------- |
+| [`@cwa-dou/mailkit-core`](packages/core)     | Shared zod schemas + operations        | [README](packages/core/README.md)      |
+| [`@cwa-dou/mailkit`](packages/cli)           | `mailkit` CLI                          | [README](packages/cli/README.md)       |
+| [`@cwa-dou/mailkit-mcp`](packages/local-mcp) | Local stdio MCP server (`mailkit-mcp`) | [README](packages/local-mcp/README.md) |
+
+`apps/remote-mcp` is private and not published.
+
+Use the published packages without cloning:
+
+```bash
+npx @cwa-dou/mailkit telegram <chatId> "<message>"   # after `mailkit init`
+npx -y @cwa-dou/mailkit-mcp                           # MCP stdio server, needs TELEGRAM_BOT_TOKEN
+```
 
 ## Usage
 
@@ -90,19 +109,33 @@ bun run dev:remote
 
 ## Scripts
 
-| Command                | Description                    |
-| ---------------------- | ------------------------------ |
-| `bun run dev:cli`      | Run the CLI from source        |
-| `bun run dev:mcp`      | Run the local stdio MCP server |
-| `bun run dev:remote`   | Run the remote HTTP MCP server |
-| `bun run build:core`   | Build `@cwa-dou/mailkit-core`  |
-| `bun run build:cli`    | Build the CLI                  |
-| `bun run lint`         | Lint with oxlint               |
-| `bun run lint:fix`     | Lint and auto-fix              |
-| `bun run format`       | Format with oxfmt              |
-| `bun run format:check` | Check formatting               |
-| `bun run typecheck`    | Type-check with `tsc`          |
-| `bun test`             | Run tests with Bun             |
+| Command                                       | Description                                                |
+| --------------------------------------------- | ---------------------------------------------------------- |
+| `bun run dev:cli`                             | Run the CLI from source                                    |
+| `bun run dev:mcp`                             | Run the local stdio MCP server                             |
+| `bun run dev:remote`                          | Run the remote HTTP MCP server                             |
+| `bun run build:core`                          | Build `@cwa-dou/mailkit-core`                              |
+| `bun run build:cli`                           | Build the CLI                                              |
+| `bun run build:mcp`                           | Build `@cwa-dou/mailkit-mcp`                               |
+| `bun run release:pack:core` / `:cli` / `:mcp` | Build + `bun pm pack --dry-run` to preview the npm tarball |
+| `bun run lint`                                | Lint with oxlint                                           |
+| `bun run lint:fix`                            | Lint and auto-fix                                          |
+| `bun run format`                              | Format with oxfmt                                          |
+| `bun run format:check`                        | Check formatting                                           |
+| `bun run typecheck`                           | Type-check with `tsc`                                      |
+| `bun test`                                    | Run tests with Bun                                         |
+
+## Publishing
+
+Publish order matters: `@cwa-dou/mailkit-core` first (the CLI and MCP packages depend on it).
+
+1. Bump `version` in the package(s) and update the `@cwa-dou/mailkit-core` range in dependents.
+2. Preview the tarball: `bun run release:pack:core` (or `:cli`, `:mcp`). Check that `README.md` and
+   `dist/` are listed.
+3. From the package directory: `bun publish` (`prepublishOnly` runs the build; `publishConfig.access`
+   is `public`).
+
+README changes in `packages/*/README.md` only reach npm on the next publish.
 
 ## CI
 

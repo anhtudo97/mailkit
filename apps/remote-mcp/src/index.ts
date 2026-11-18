@@ -4,10 +4,7 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import { type Context, Hono } from "hono";
 
 import { generateClerkProtectedResourceMetadata } from "@clerk/mcp-tools/server";
-import {
-  sendTelegramMessage,
-  telegramMessageInputSchema,
-} from "@cwa-dou/mailkit-core";
+import { sendTelegramMessage, telegramMessageInputSchema } from "@cwa-dou/mailkit-core";
 
 const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
 const clerkSecretKey = process.env.CLERK_SECRET_KEY;
@@ -62,10 +59,7 @@ function createServer(botToken: string) {
 const app = new Hono();
 
 function protectedResourceMetadataUrl(c: Context, botToken: string) {
-  return new URL(
-    `/.well-known/oauth-protected-resource/${botToken}/mcp`,
-    c.req.url,
-  ).toString();
+  return new URL(`/.well-known/oauth-protected-resource/${botToken}/mcp`, c.req.url).toString();
 }
 
 function unauthorizedMcpResponse(c: Context, botToken: string) {
@@ -80,10 +74,7 @@ app.get("/.well-known/oauth-protected-resource/:botToken/mcp", (c) => {
   return c.json(
     generateClerkProtectedResourceMetadata({
       publishableKey: clerkPublishableKey,
-      resourceUrl: new URL(
-        `/${c.req.param("botToken")}/mcp`,
-        c.req.url,
-      ).toString(),
+      resourceUrl: new URL(`/${c.req.param("botToken")}/mcp`, c.req.url).toString(),
     }),
   );
 });

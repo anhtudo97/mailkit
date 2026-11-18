@@ -27,6 +27,8 @@ bun run dev:mcp      # run local stdio MCP server (needs TELEGRAM_BOT_TOKEN)
 bun run dev:remote   # run remote HTTP MCP server (needs CLERK_* env vars)
 bun run build:core   # tsdown build of core
 bun run build:cli    # tsdown build of CLI
+bun run build:mcp    # tsdown build of local-mcp
+bun run release:pack:core|cli|mcp  # build + `bun pm pack --dry-run` (preview npm tarball)
 bunx <tool>          # instead of npx
 ```
 
@@ -45,10 +47,13 @@ Run `bun run lint`, `bun run typecheck` and `bun test` after changing code.
 ## Layout
 
 - `packages/core` (`@cwa-dou/mailkit-core`) - shared zod schemas + operations (`sendTelegramMessage`). All business logic lives here; other packages are thin adapters
-- `packages/cli` - mailkit CLI (commander). Token stored in `~/.config/mailkit/config.json` via `mailkit init`
-- `packages/local-mcp` (`@cwa-dou/mailkit-mcp`) - stdio MCP server, token from `TELEGRAM_BOT_TOKEN`
+- `packages/cli` (`@cwa-dou/mailkit`, bin `mailkit`) - CLI (commander). Token stored in `~/.config/mailkit/config.json` via `mailkit init`
+- `packages/local-mcp` (`@cwa-dou/mailkit-mcp`, bin `mailkit-mcp`) - stdio MCP server, token from `TELEGRAM_BOT_TOKEN`
 - `apps/remote-mcp` - Hono HTTP MCP server, Clerk OAuth, bot token taken from the `/:botToken/mcp` path
 - New capability: add schema + operation in `core`, then register it in CLI / local-mcp / remote-mcp
 - Each package has `tsdown.config.ts` + `tsconfig.build.json`; workspace deps are kept external (`deps.neverBundle`)
+- Published packages (`core`, `cli`, `local-mcp`): `publishConfig.access: public`, `files: ["dist"]`, `prepublishOnly` builds. Publish `core` before its dependents. `apps/remote-mcp` is private
+- Each published package has its own `README.md` (npm packs it automatically, shown on the npm page). Keep it in sync when its CLI commands, tool names, env vars or exports change; write it for npm users, not repo contributors
+- Use the name `mailkit` everywhere (bin, config dir, server names, messages); the old name `sendkit` must not reappear
 - `.mcp.json` is git-ignored (holds a real token); never commit it
 - Root configs: `.oxlintrc.json`, `.oxfmtrc.json`, `tsconfig.json`, `commitlint.config.mjs`, `.editorconfig`, `.vscode/`
