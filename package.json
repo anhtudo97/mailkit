@@ -25,7 +25,8 @@
     "build:cli": "bun run --filter @cwa-dou/mailkit build",
     "build:mcp": "bun run --filter @cwa-dou/mailkit-mcp build",
     "release:pack:core": "bun run --filter @cwa-dou/mailkit-core pack:dry",
-    "release:pack:cli": "bun run --filter @cwa-dou/mailkit pack:dry"
+    "release:pack:cli": "bun run --filter @cwa-dou/mailkit pack:dry",
+    "release:pack:mcp": "bun run --filter @cwa-dou/mailkit-mcp pack:dry"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",

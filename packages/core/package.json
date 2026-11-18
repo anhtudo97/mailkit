@@ -1,6 +1,9 @@
 {
   "name": "@cwa-dou/mailkit-core",
   "version": "0.0.0",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -19,9 +22,6 @@
     "pack:dry": "bun run build && bun pm pack --dry-run",
     "prepublishOnly": "bun run build"
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "zod": "^4.6.7"
   }

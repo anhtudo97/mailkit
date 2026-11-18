@@ -1,6 +1,12 @@
 {
   "name": "@cwa-dou/mailkit-mcp",
   "version": "0.0.0",
+  "bin": {
+    "mailkit-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -15,13 +21,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "pack:dry": "bun run build && bun pm pack --dry-run",
+    "prepublishOnly": "bun run build"
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
-    "@cwa-dou/mailkit-core": "workspace:*",
+    "@cwa-dou/mailkit-core": "^0.0.0",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "zod": "^4.6.7"
   }
