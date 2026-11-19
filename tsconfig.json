@@ -7,9 +7,7 @@
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
-    "types": [
-      "bun"
-    ],
+    "types": ["bun"],
     "skipLibCheck": true
   }
 }
