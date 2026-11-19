@@ -26,4 +26,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile --ignore-scripts
+      # Workspace packages resolve types via dist/ (gitignored), so build core first
+      - run: bun run build:core
       - run: bun run typecheck
