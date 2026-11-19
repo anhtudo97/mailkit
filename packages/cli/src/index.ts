@@ -3,11 +3,11 @@ import { Command } from "commander";
 import { z } from "zod";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
-import { sendTelegramMessage } from "@cwa-dou/mailkit-core";
+import { sendTelegramMessage } from "@cwa-dou/telekit-core";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const program = new Command();
-const configPath = join(homedir(), ".config", "mailkit", "config.json");
+const configPath = join(homedir(), ".config", "telekit", "config.json");
 const cliConfigSchema = z.object({
   telegramBotToken: z.string().min(1).optional(),
 });
@@ -21,28 +21,28 @@ function writeTelegramBotToken(token: string) {
 
 function getTelegramBotToken() {
   if (!existsSync(configPath)) {
-    throw new Error("Telegram bot token is required. Run `mailkit init`.");
+    throw new Error("Telegram bot token is required. Run `telekit init`.");
   }
 
   const config = cliConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf8")));
   const token = config.telegramBotToken;
 
   if (!token) {
-    throw new Error("Telegram bot token is required. Run `mailkit init`.");
+    throw new Error("Telegram bot token is required. Run `telekit init`.");
   }
 
   return token;
 }
 
-program.name("mailkit").description("MailKit CLI backed by @cwa-dou/mailkit-core");
+program.name("telekit").description("TeleKit CLI backed by @cwa-dou/telekit-core");
 
 program
   .command("init")
-  .description("Configure MailKit CLI local settings")
+  .description("Configure TeleKit CLI local settings")
   .requiredOption("--telegram-bot-token <botToken>", "Telegram bot token")
   .action(async (options: { telegramBotToken: string }) => {
     writeTelegramBotToken(options.telegramBotToken);
-    console.log(`Saved MailKit CLI config to ${configPath}`);
+    console.log(`Saved TeleKit CLI config to ${configPath}`);
   });
 
 program

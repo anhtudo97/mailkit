@@ -1,5 +1,5 @@
 {
-  "name": "mailkit-remote-mcp",
+  "name": "telekit-remote-mcp",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,7 +12,7 @@
   "dependencies": {
     "@clerk/backend": "^3.27.0",
     "@clerk/mcp-tools": "^0.9.0",
-    "@cwa-dou/mailkit-core": "^0.0.0",
+    "@cwa-dou/telekit-core": "^0.0.0",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "commander": "^15.1.0",
     "hono": "^4.13.17",

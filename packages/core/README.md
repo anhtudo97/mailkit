@@ -1,8 +1,8 @@
-# @cwa-dou/mailkit-core
+# @cwa-dou/telekit-core
 
-Shared [zod](https://zod.dev) schemas and operations behind the mailkit
-[CLI](https://www.npmjs.com/package/@cwa-dou/mailkit) and
-[MCP server](https://www.npmjs.com/package/@cwa-dou/mailkit-mcp). Currently supports sending
+Shared [zod](https://zod.dev) schemas and operations behind the telekit
+[CLI](https://www.npmjs.com/package/@cwa-dou/telekit) and
+[MCP server](https://www.npmjs.com/package/@cwa-dou/telekit-mcp). Currently supports sending
 Telegram messages.
 
 ESM only.
@@ -10,20 +10,20 @@ ESM only.
 ## Install
 
 ```bash
-npm install @cwa-dou/mailkit-core
+npm install @cwa-dou/telekit-core
 # or
-bun add @cwa-dou/mailkit-core
+bun add @cwa-dou/telekit-core
 ```
 
 ## Usage
 
 ```ts
-import { sendTelegramMessage } from "@cwa-dou/mailkit-core";
+import { sendTelegramMessage } from "@cwa-dou/telekit-core";
 
 const result = await sendTelegramMessage({
   botToken: process.env.TELEGRAM_BOT_TOKEN!,
   chatId: "123456789",
-  message: "Hello from mailkit",
+  message: "Hello from telekit",
 });
 
 console.log(result); // { ok: true, chatId: "123456789", messageId: 42 }
@@ -46,10 +46,10 @@ returns an error.
 
 ## Related packages
 
-- [`@cwa-dou/mailkit`](https://www.npmjs.com/package/@cwa-dou/mailkit) - CLI
-- [`@cwa-dou/mailkit-mcp`](https://www.npmjs.com/package/@cwa-dou/mailkit-mcp) - local stdio MCP server
+- [`@cwa-dou/telekit`](https://www.npmjs.com/package/@cwa-dou/telekit) - CLI
+- [`@cwa-dou/telekit-mcp`](https://www.npmjs.com/package/@cwa-dou/telekit-mcp) - local stdio MCP server
 
-Part of [mailkit](https://github.com/anhtudo97/mailkit).
+Part of [telekit](https://github.com/anhtudo97/telekit).
 
 ## License
 

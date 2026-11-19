@@ -1,13 +1,13 @@
-# @cwa-dou/mailkit
+# @cwa-dou/telekit
 
-Command line tool to send notifications (currently Telegram) with mailkit.
+Command line tool to send notifications (currently Telegram) with telekit.
 
 ## Install
 
 ```bash
-npm install -g @cwa-dou/mailkit
+npm install -g @cwa-dou/telekit
 # or run without installing
-npx @cwa-dou/mailkit --help
+npx @cwa-dou/telekit --help
 ```
 
 Requires Node.js >= 18.
@@ -20,15 +20,15 @@ Requires Node.js >= 18.
 3. Save the token locally:
 
 ```bash
-mailkit init --telegram-bot-token <token>
+telekit init --telegram-bot-token <token>
 ```
 
-The token is stored in `~/.config/mailkit/config.json` (file mode `600`).
+The token is stored in `~/.config/telekit/config.json` (file mode `600`).
 
 ## Usage
 
 ```bash
-mailkit telegram <chatId> "<message>"
+telekit telegram <chatId> "<message>"
 ```
 
 Prints the result as JSON on success:
@@ -43,15 +43,15 @@ On failure the error message is printed to stderr and the exit code is `1`.
 
 | Command                                 | Description                                 |
 | --------------------------------------- | ------------------------------------------- |
-| `mailkit init --telegram-bot-token <t>` | Save the Telegram bot token to local config |
-| `mailkit telegram <chatId> <message>`   | Send a Telegram message                     |
+| `telekit init --telegram-bot-token <t>` | Save the Telegram bot token to local config |
+| `telekit telegram <chatId> <message>`   | Send a Telegram message                     |
 
 ## Related packages
 
-- [`@cwa-dou/mailkit-core`](https://www.npmjs.com/package/@cwa-dou/mailkit-core) - shared schemas and operations
-- [`@cwa-dou/mailkit-mcp`](https://www.npmjs.com/package/@cwa-dou/mailkit-mcp) - local stdio MCP server
+- [`@cwa-dou/telekit-core`](https://www.npmjs.com/package/@cwa-dou/telekit-core) - shared schemas and operations
+- [`@cwa-dou/telekit-mcp`](https://www.npmjs.com/package/@cwa-dou/telekit-mcp) - local stdio MCP server
 
-Part of [mailkit](https://github.com/anhtudo97/mailkit).
+Part of [telekit](https://github.com/anhtudo97/telekit).
 
 ## License
 

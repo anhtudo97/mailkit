@@ -11,6 +11,6 @@ export default defineConfig({
   outDir: "dist",
   outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
   deps: {
-    neverBundle: ["@cwa-dou/mailkit-core", "commander", "zod"],
+    neverBundle: ["@cwa-dou/telekit-core", "commander", "zod"],
   },
 });

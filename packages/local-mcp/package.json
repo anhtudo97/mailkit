@@ -1,8 +1,8 @@
 {
-  "name": "@cwa-dou/mailkit-mcp",
+  "name": "@cwa-dou/telekit-mcp",
   "version": "0.0.0",
   "bin": {
-    "mailkit-mcp": "./dist/index.js"
+    "telekit-mcp": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -26,7 +26,7 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@cwa-dou/mailkit-core": "^0.0.0",
+    "@cwa-dou/telekit-core": "^0.0.0",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "zod": "^4.6.7"
   }

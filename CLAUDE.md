@@ -46,14 +46,14 @@ Run `bun run lint`, `bun run typecheck` and `bun test` after changing code.
 
 ## Layout
 
-- `packages/core` (`@cwa-dou/mailkit-core`) - shared zod schemas + operations (`sendTelegramMessage`). All business logic lives here; other packages are thin adapters
-- `packages/cli` (`@cwa-dou/mailkit`, bin `mailkit`) - CLI (commander). Token stored in `~/.config/mailkit/config.json` via `mailkit init`
-- `packages/local-mcp` (`@cwa-dou/mailkit-mcp`, bin `mailkit-mcp`) - stdio MCP server, token from `TELEGRAM_BOT_TOKEN`
+- `packages/core` (`@cwa-dou/telekit-core`) - shared zod schemas + operations (`sendTelegramMessage`). All business logic lives here; other packages are thin adapters
+- `packages/cli` (`@cwa-dou/telekit`, bin `telekit`) - CLI (commander). Token stored in `~/.config/telekit/config.json` via `telekit init`
+- `packages/local-mcp` (`@cwa-dou/telekit-mcp`, bin `telekit-mcp`) - stdio MCP server, token from `TELEGRAM_BOT_TOKEN`
 - `apps/remote-mcp` - Hono HTTP MCP server, Clerk OAuth, bot token taken from the `/:botToken/mcp` path
 - New capability: add schema + operation in `core`, then register it in CLI / local-mcp / remote-mcp
 - Each package has `tsdown.config.ts` + `tsconfig.build.json`; workspace deps are kept external (`deps.neverBundle`)
 - Published packages (`core`, `cli`, `local-mcp`): `publishConfig.access: public`, `files: ["dist"]`, `prepublishOnly` builds. Publish `core` before its dependents. `apps/remote-mcp` is private
 - Each published package has its own `README.md` (npm packs it automatically, shown on the npm page). Keep it in sync when its CLI commands, tool names, env vars or exports change; write it for npm users, not repo contributors
-- Use the name `mailkit` everywhere (bin, config dir, server names, messages); the old name `sendkit` must not reappear
+- Use the name `telekit` everywhere (bin, config dir, server names, messages); the old names `sendkit` and `mailkit` must not reappear
 - `.mcp.json` is git-ignored (holds a real token); never commit it
 - Root configs: `.oxlintrc.json`, `.oxfmtrc.json`, `tsconfig.json`, `commitlint.config.mjs`, `.editorconfig`, `.vscode/`

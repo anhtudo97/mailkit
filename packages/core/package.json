@@ -1,5 +1,5 @@
 {
-  "name": "@cwa-dou/mailkit-core",
+  "name": "@cwa-dou/telekit-core",
   "version": "0.0.0",
   "files": [
     "dist"

@@ -1,4 +1,4 @@
-# mailkit
+# telekit
 
 Send notifications (currently Telegram) from a CLI, a local MCP server, or a remote MCP server,
 all backed by one shared core package.
@@ -31,9 +31,9 @@ Environment variables (see [.env.example](.env.example)):
 ```
 .
 ├── packages/
-│   ├── core/         # @cwa-dou/mailkit-core: zod schemas + operations (sendTelegramMessage)
-│   ├── cli/          # @cwa-dou/mailkit: CLI (commander)
-│   └── local-mcp/    # @cwa-dou/mailkit-mcp: stdio MCP server
+│   ├── core/         # @cwa-dou/telekit-core: zod schemas + operations (sendTelegramMessage)
+│   ├── cli/          # @cwa-dou/telekit: CLI (commander)
+│   └── local-mcp/    # @cwa-dou/telekit-mcp: stdio MCP server
 ├── apps/
 │   └── remote-mcp/   # Hono HTTP MCP server, protected by Clerk OAuth
 ├── .github/workflows/ci.yml  # format check + typecheck
@@ -54,17 +54,17 @@ Published to npm (public). Each package has its own README, shown on the npm pag
 
 | Package                                      | Description                            | Docs                                   |
 | -------------------------------------------- | -------------------------------------- | -------------------------------------- |
-| [`@cwa-dou/mailkit-core`](packages/core)     | Shared zod schemas + operations        | [README](packages/core/README.md)      |
-| [`@cwa-dou/mailkit`](packages/cli)           | `mailkit` CLI                          | [README](packages/cli/README.md)       |
-| [`@cwa-dou/mailkit-mcp`](packages/local-mcp) | Local stdio MCP server (`mailkit-mcp`) | [README](packages/local-mcp/README.md) |
+| [`@cwa-dou/telekit-core`](packages/core)     | Shared zod schemas + operations        | [README](packages/core/README.md)      |
+| [`@cwa-dou/telekit`](packages/cli)           | `telekit` CLI                          | [README](packages/cli/README.md)       |
+| [`@cwa-dou/telekit-mcp`](packages/local-mcp) | Local stdio MCP server (`telekit-mcp`) | [README](packages/local-mcp/README.md) |
 
 `apps/remote-mcp` is private and not published.
 
 Use the published packages without cloning:
 
 ```bash
-npx @cwa-dou/mailkit telegram <chatId> "<message>"   # after `mailkit init`
-npx -y @cwa-dou/mailkit-mcp                           # MCP stdio server, needs TELEGRAM_BOT_TOKEN
+npx @cwa-dou/telekit telegram <chatId> "<message>"   # after `telekit init`
+npx -y @cwa-dou/telekit-mcp                           # MCP stdio server, needs TELEGRAM_BOT_TOKEN
 ```
 
 ## Usage
@@ -72,7 +72,7 @@ npx -y @cwa-dou/mailkit-mcp                           # MCP stdio server, needs 
 ### CLI
 
 ```bash
-bun run dev:cli init --telegram-bot-token <token>   # saves ~/.config/mailkit/config.json (mode 600)
+bun run dev:cli init --telegram-bot-token <token>   # saves ~/.config/telekit/config.json (mode 600)
 bun run dev:cli telegram <chatId> "<message>"
 ```
 
@@ -87,7 +87,7 @@ Example client config (`.mcp.json` is git-ignored because it holds the token):
 ```json
 {
   "mcpServers": {
-    "mailkit-local": {
+    "telekit-local": {
       "command": "bun",
       "args": ["run", "dev:mcp"],
       "env": { "TELEGRAM_BOT_TOKEN": "<token>" }
@@ -114,9 +114,9 @@ bun run dev:remote
 | `bun run dev:cli`                             | Run the CLI from source                                    |
 | `bun run dev:mcp`                             | Run the local stdio MCP server                             |
 | `bun run dev:remote`                          | Run the remote HTTP MCP server                             |
-| `bun run build:core`                          | Build `@cwa-dou/mailkit-core`                              |
+| `bun run build:core`                          | Build `@cwa-dou/telekit-core`                              |
 | `bun run build:cli`                           | Build the CLI                                              |
-| `bun run build:mcp`                           | Build `@cwa-dou/mailkit-mcp`                               |
+| `bun run build:mcp`                           | Build `@cwa-dou/telekit-mcp`                               |
 | `bun run release:pack:core` / `:cli` / `:mcp` | Build + `bun pm pack --dry-run` to preview the npm tarball |
 | `bun run lint`                                | Lint with oxlint                                           |
 | `bun run lint:fix`                            | Lint and auto-fix                                          |
@@ -127,9 +127,9 @@ bun run dev:remote
 
 ## Publishing
 
-Publish order matters: `@cwa-dou/mailkit-core` first (the CLI and MCP packages depend on it).
+Publish order matters: `@cwa-dou/telekit-core` first (the CLI and MCP packages depend on it).
 
-1. Bump `version` in the package(s) and update the `@cwa-dou/mailkit-core` range in dependents.
+1. Bump `version` in the package(s) and update the `@cwa-dou/telekit-core` range in dependents.
 2. Preview the tarball: `bun run release:pack:core` (or `:cli`, `:mcp`). Check that `README.md` and
    `dist/` are listed.
 3. From the package directory: `bun publish` (`prepublishOnly` runs the build; `publishConfig.access`

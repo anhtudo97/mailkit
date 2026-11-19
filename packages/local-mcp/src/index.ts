@@ -2,10 +2,10 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
-import { telegramMessageInputSchema, sendTelegramMessage } from "@cwa-dou/mailkit-core";
+import { telegramMessageInputSchema, sendTelegramMessage } from "@cwa-dou/telekit-core";
 
 const server = new McpServer({
-  name: "mailkit-local",
+  name: "telekit-local",
   version: "0.0.0",
 });
 

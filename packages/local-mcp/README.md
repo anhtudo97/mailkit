@@ -1,7 +1,7 @@
-# @cwa-dou/mailkit-mcp
+# @cwa-dou/telekit-mcp
 
 Local [MCP](https://modelcontextprotocol.io) server (stdio) that lets AI clients send notifications
-(currently Telegram) through mailkit.
+(currently Telegram) through telekit.
 
 ## Setup
 
@@ -13,9 +13,9 @@ Local [MCP](https://modelcontextprotocol.io) server (stdio) that lets AI clients
 ```json
 {
   "mcpServers": {
-    "mailkit": {
+    "telekit": {
       "command": "npx",
-      "args": ["-y", "@cwa-dou/mailkit-mcp"],
+      "args": ["-y", "@cwa-dou/telekit-mcp"],
       "env": { "TELEGRAM_BOT_TOKEN": "<token>" }
     }
   }
@@ -25,7 +25,7 @@ Local [MCP](https://modelcontextprotocol.io) server (stdio) that lets AI clients
 ### Claude Code
 
 ```bash
-claude mcp add mailkit --env TELEGRAM_BOT_TOKEN=<token> -- npx -y @cwa-dou/mailkit-mcp
+claude mcp add telekit --env TELEGRAM_BOT_TOKEN=<token> -- npx -y @cwa-dou/telekit-mcp
 ```
 
 Requires Node.js >= 18. Keep the token out of version control.
@@ -46,10 +46,10 @@ Returns a text confirmation plus structured content: `{ ok: true, chatId, messag
 
 ## Related packages
 
-- [`@cwa-dou/mailkit-core`](https://www.npmjs.com/package/@cwa-dou/mailkit-core) - shared schemas and operations
-- [`@cwa-dou/mailkit`](https://www.npmjs.com/package/@cwa-dou/mailkit) - CLI
+- [`@cwa-dou/telekit-core`](https://www.npmjs.com/package/@cwa-dou/telekit-core) - shared schemas and operations
+- [`@cwa-dou/telekit`](https://www.npmjs.com/package/@cwa-dou/telekit) - CLI
 
-Part of [mailkit](https://github.com/anhtudo97/mailkit).
+Part of [telekit](https://github.com/anhtudo97/telekit).
 
 ## License
 
